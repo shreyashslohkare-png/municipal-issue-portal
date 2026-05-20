@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Municipal Issue Portal</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="Municipal Issue Portal home">
+        <span class="brand-mark">MP</span>
+        <span>
+          <strong>Municipal Portal</strong>
+          <small>Ward response desk</small>
+        </span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#report">Report</a>
+        <a href="#public">Tracker</a>
+        <a href="#office">Office</a>
+      </nav>
+    </header>
+
+    <main id="home">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Municipal complaint resolution</p>
+          <h1>Report civic issues. Track verified action.</h1>
+          <p class="hero-text">
+            A clean public portal for drainage, road, garbage, light, and water complaints with private citizen details and visible municipal progress.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#report">Submit report</a>
+            <a class="button secondary" href="#office">Open office queue</a>
+          </div>
+        </div>
+
+        <aside class="command-panel" aria-label="Live portal overview">
+          <div class="panel-header">
+            <div>
+              <span class="panel-kicker">Today</span>
+              <strong id="heroCount">0 active</strong>
+            </div>
+            <span class="signal-dot" aria-hidden="true"></span>
+          </div>
+          <div class="stage-track">
+            <div><span>01</span><strong>Submitted</strong></div>
+            <div><span>02</span><strong>Assigned</strong></div>
+            <div><span>03</span><strong>Verified</strong></div>
+            <div><span>04</span><strong>In progress</strong></div>
+            <div><span>05</span><strong>Completed</strong></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="metrics" aria-label="Portal metrics">
+        <article>
+          <span id="metricSubmitted">0</span>
+          <p>Total reports</p>
+        </article>
+        <article>
+          <span id="metricVerified">0</span>
+          <p>Verified</p>
+        </article>
+        <article>
+          <span id="metricProgress">0</span>
+          <p>In progress</p>
+        </article>
+        <article>
+          <span id="metricCompleted">0</span>
+          <p>Completed</p>
+        </article>
+      </section>
+
+      <section id="report" class="workspace-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Citizen desk</p>
+            <h2>New complaint</h2>
+          </div>
+          <span class="privacy-pill">Reporter details stay private</span>
+        </div>
+
+        <div class="report-layout">
+          <form id="complaintForm" class="form-card">
+            <div class="form-section-title">
+              <strong>Issue details</strong>
+              <span>Required</span>
+            </div>
+
+            <div class="field-row">
+              <label>
+                Issue title
+                <input name="title" required maxlength="120" placeholder="Drainage overflow near main road">
+              </label>
+              <label>
+                Category
+                <select name="category" required>
+                  <option>Drainage</option>
+                  <option>Road damage</option>
+                  <option>Garbage</option>
+                  <option>Street light</option>
+                  <option>Water supply</option>
+                  <option>Other</option>
+                </select>
+              </label>
+            </div>
+
+            <label>
+              Description
+              <textarea name="description" required rows="4" maxlength="800" placeholder="What exactly is happening?"></textarea>
+            </label>
+
+            <div class="field-row">
+              <label>
+                Your name
+                <input name="reporterName" maxlength="80" placeholder="Optional">
+              </label>
+              <label>
+                Phone or email
+                <input name="reporterPhone" maxlength="120" placeholder="Only visible to office">
+              </label>
+            </div>
+
+            <div class="field-row media-row">
+              <label>
+                Issue photo
+                <input id="issuePhoto" name="photo" required type="file" accept="image/*">
+              </label>
+              <div class="location-box">
+                <div>
+                  <strong>Location</strong>
+                  <p id="locationStatus">Not captured</p>
+                </div>
+                <button class="button secondary compact" id="captureLocation" type="button">Capture</button>
+              </div>
+            </div>
+
+            <label>
+              Address or landmark
+              <input name="address" maxlength="240" placeholder="Near Ward 5 bus stop">
+            </label>
+
+            <button class="button primary full" type="submit">Send to municipal office</button>
+            <p id="formMessage" class="form-message" role="status"></p>
+          </form>
+
+          <aside class="assurance-panel">
+            <div>
+              <span class="panel-kicker">Public view</span>
+              <h3>Citizens see the status, not the reporter.</h3>
+            </div>
+            <dl>
+              <div><dt>Visible</dt><dd>Issue photo, category, location, status, completion proof</dd></div>
+              <div><dt>Private</dt><dd>Name, phone, email, internal officer notes</dd></div>
+              <div><dt>Office</dt><dd>Assign worker, verify site, publish progress</dd></div>
+            </dl>
+          </aside>
+        </div>
+      </section>
+
+      <section id="public" class="wide-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Public tracker</p>
+            <h2>Issue board</h2>
+          </div>
+          <div class="filter-group" aria-label="Filter complaints">
+            <button class="chip active" data-filter="all" type="button">All</button>
+            <button class="chip" data-filter="submitted" type="button">Submitted</button>
+            <button class="chip" data-filter="assigned" type="button">Assigned</button>
+            <button class="chip" data-filter="verified" type="button">Verified</button>
+            <button class="chip" data-filter="in_progress" type="button">In progress</button>
+            <button class="chip" data-filter="completed" type="button">Completed</button>
+          </div>
+        </div>
+        <div id="publicList" class="complaint-grid"></div>
+      </section>
+
+      <section id="office" class="workspace-section office-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Municipal office</p>
+            <h2>Operations queue</h2>
+          </div>
+          <span class="privacy-pill dark">Demo PIN 2468</span>
+        </div>
+
+        <div class="admin-shell">
+          <form id="adminLogin" class="admin-login">
+            <label>
+              Admin PIN
+              <input id="adminPin" type="password" inputmode="numeric" placeholder="2468">
+            </label>
+            <button class="button primary" type="submit">Open dashboard</button>
+          </form>
+
+          <div id="adminDashboard" class="admin-dashboard hidden">
+            <div class="admin-summary" aria-label="Office queue summary">
+              <article><span id="adminOpen">0</span><p>Open</p></article>
+              <article><span id="adminAssigned">0</span><p>Assigned</p></article>
+              <article><span id="adminDone">0</span><p>Completed</p></article>
+            </div>
+            <div class="admin-toolbar">
+              <strong>Complaint queue</strong>
+              <button class="button secondary compact" id="refreshAdmin" type="button">Refresh</button>
+            </div>
+            <div id="adminList" class="admin-list"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <template id="complaintTemplate">
+      <article class="complaint-card">
+        <div class="image-wrap">
+          <img alt="">
+          <span class="status-badge"></span>
+        </div>
+        <div class="card-body">
+          <div class="card-title-row">
+            <h3></h3>
+            <span class="category"></span>
+          </div>
+          <p class="description"></p>
+          <div class="status-steps" aria-label="Complaint progress"></div>
+          <dl class="meta-list">
+            <div><dt>ID</dt><dd class="id"></dd></div>
+            <div><dt>Location</dt><dd class="location"></dd></div>
+            <div><dt>Assigned</dt><dd class="assigned"></dd></div>
+          </dl>
+          <div class="timeline"></div>
+          <div class="completion-proof hidden">
+            <strong>Completion proof</strong>
+            <img alt="Completion proof photo">
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
