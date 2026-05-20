@@ -1,0 +1,19 @@
+{
+  "name": "municipal-issue-portal",
+  "version": "1.0.0",
+  "description": "Privacy-first municipal complaint reporting and officer workflow portal.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "municipal",
+    "complaints",
+    "civic-tech"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}
